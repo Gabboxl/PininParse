@@ -9,20 +9,16 @@ class PininParse {
             var pages = mutableListOf<ArrayList<Any>>()
 
             val apiResponsePeriodi =
-                URL("https://intranet.itispininfarina.it/orario/_ressource.js").readText()
+                URL("https://intranet.itispininfarina.it/orario/_ressource.js").readText().lines()
 
-            File("classi.js").writeText(apiResponsePeriodi)
-
-            var file = File("classi.js").readLines()
-
-            for (page in file) {
+            for (page in apiResponsePeriodi) {
                 if (page.contains("new Ressource")) {
                     var pattern = Regex("""listeRessources \[\d+]\s?=\s?new Ressource \(("(.*)",?\s?\n?)+\);""")
                     var fatt = pattern.find(page)!!.groupValues.get(1)
                     //println(fatt)
 
                     var patternSplit = Regex(""",(?=(?:[^"]*"[^"]*")*(?![^"]*"))""")
-                    var values = patternSplit.split(fatt.toString())
+                    var values = patternSplit.split(fatt)
                     //println(fatto2)
 
                     var currNo = pages.count()
@@ -31,7 +27,7 @@ class PininParse {
                     var i = 0
                     while (i < values.count()) {
 
-                        pages[currNo].plusAssign(values[i].toString())
+                        pages[currNo].plusAssign(values[i])
 
                         i++
                     }
