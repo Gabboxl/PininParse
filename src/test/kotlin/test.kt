@@ -1,5 +1,6 @@
 import ga.gabboxl.pininparse.PininParse
 
 fun main(){
-    print(PininParse.classi())
+    println(PininParse.classi())
+    println(PininParse.periodi())
 }

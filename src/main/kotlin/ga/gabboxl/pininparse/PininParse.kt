@@ -5,7 +5,7 @@ import java.net.URL
 class PininParse {
     companion object {
         fun classi(): MutableList<ArrayList<Any>> {
-            var pages = mutableListOf<ArrayList<Any>>()
+            val pages = mutableListOf<ArrayList<Any>>()
 
             val apiResponsePeriodi =
                 URL("https://intranet.itispininfarina.it/orario/_ressource.js").readText().lines()
@@ -20,8 +20,9 @@ class PininParse {
             return pages
         }
 
+
         fun periodi(): MutableList<ArrayList<Any>> {
-            var pages = mutableListOf<ArrayList<Any>>()
+            val pages = mutableListOf<ArrayList<Any>>()
 
             val apiResponsePeriodi =
                 URL("https://intranet.itispininfarina.it/orario/_periode.js").readText().lines()
@@ -36,17 +37,14 @@ class PininParse {
             return pages
         }
 
-        private fun parseEDTjs(
-            pattern: Regex,
-            page: String,
-            pages: MutableList<ArrayList<Any>>
-        ) {
-            var fatt = pattern.find(page)!!.groupValues.get(1)
 
-            var patternSplit = Regex(""",(?=(?:[^"]*"[^"]*")*(?![^"]*"))""")
-            var values = patternSplit.split(fatt)
+        fun parseEDTjs(pattern: Regex, line: String, pages: MutableList<ArrayList<Any>>) {
+            val fatt = pattern.find(line)!!.groupValues[1]
 
-            var currNo = pages.count()
+            val patternSplit = Regex(""",(?=(?:[^"]*"[^"]*")*(?![^"]*"))""")
+            val values = patternSplit.split(fatt)
+
+            val currNo = pages.count()
             pages.plusAssign(arrayListOf<Any>())
 
             var i = 0
