@@ -3,26 +3,10 @@ package ga.gabboxl.pininparse
 import java.net.URL
 
 class PininParse {
-    companion object {
-        fun classi(): MutableList<ArrayList<Any>> {
-            val pages = mutableListOf<ArrayList<Any>>()
+    inner class periodi {
+        private val pages = mutableListOf<ArrayList<Any>>()
 
-            val apiResponsePeriodi =
-                URL("https://intranet.itispininfarina.it/orario/_ressource.js").readText().lines()
-
-            for (line in apiResponsePeriodi) {
-                if (line.contains("new Ressource")) {
-                    val pattern = Regex("""listeRessources \[\d+]\s?=\s?new Ressource \(("(.*)",?\s?\n?)+\);""")
-                    parseEDTjs(pattern, line, pages)
-                }
-            }
-
-            return pages
-        }
-
-
-        fun periodi(): MutableList<ArrayList<Any>> {
-            val pages = mutableListOf<ArrayList<Any>>()
+        init {
 
             val apiResponsePeriodi =
                 URL("https://intranet.itispininfarina.it/orario/_periode.js").readText().lines()
@@ -33,28 +17,52 @@ class PininParse {
                     parseEDTjs(pattern, line, pages)
                 }
             }
-
-            return pages
         }
 
+        fun list(): MutableList<ArrayList<Any>> {
+            return pages
+        }
+    }
 
-        fun parseEDTjs(pattern: Regex, line: String, pages: MutableList<ArrayList<Any>>) {
-            val fatt = pattern.find(line)!!.groupValues[1]
+    inner class classi {
+        val pages = mutableListOf<ArrayList<Any>>()
 
-            val patternSplit = Regex(""",(?=(?:[^"]*"[^"]*")*(?![^"]*"))""")
-            val values = patternSplit.split(fatt)
+        init {
 
-            val currNo = pages.count()
-            pages.plusAssign(arrayListOf<Any>())
+            val apiResponsePeriodi =
+                URL("https://intranet.itispininfarina.it/orario/_ressource.js").readText().lines()
 
-            var i = 0
-            while (i < values.count()) {
-
-                pages[currNo].plusAssign(values[i])
-
-                i++
+            for (line in apiResponsePeriodi) {
+                if (line.contains("new Ressource")) {
+                    val pattern = Regex("""listeRessources \[\d+]\s?=\s?new Ressource \(("(.*)",?\s?\n?)+\);""")
+                    parseEDTjs(pattern, line, pages)
+                }
             }
         }
 
+        fun list(): MutableList<ArrayList<Any>> {
+            return pages
+        }
     }
+
+
+    private fun parseEDTjs(pattern: Regex, line: String, pages: MutableList<ArrayList<Any>>) {
+        val fatt = pattern.find(line)!!.groupValues[1]
+
+        val patternSplit = Regex(""",(?=(?:[^"]*"[^"]*")*(?![^"]*"))""")
+        val values = patternSplit.split(fatt)
+
+        val currNo = pages.count()
+        pages.plusAssign(arrayListOf<Any>())
+
+        var i = 0
+        while (i < values.count()) {
+
+            pages[currNo].plusAssign(values[i])
+
+            i++
+        }
+    }
+
+
 }
