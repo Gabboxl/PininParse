@@ -25,7 +25,7 @@ class PininParse {
     }
 
     inner class classi {
-        val pages = mutableListOf<ArrayList<Any>>()
+        private val pages = mutableListOf<ArrayList<Any>>()
 
         init {
 
