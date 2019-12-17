@@ -5,8 +5,6 @@ import java.net.URL
 class PininParse {
     companion object {
 
-
-
         private fun parseEDTjs(pattern: Regex, line: String, pages: MutableList<ArrayList<Any>>) {
             val fatt = pattern.find(line)!!.groupValues[1]
 
