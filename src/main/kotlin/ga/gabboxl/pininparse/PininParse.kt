@@ -32,7 +32,7 @@ class PininParse {
             init {
 
                 val apiResponsePeriodi =
-                    URL("https://intranet.itispininfarina.it/orario/_periode.js").readText().lines()
+                    URL("https://orario.itispininfarina.it/_periode.js").readText().lines()
 
                 for (line in apiResponsePeriodi) {
                     if (line.contains("new Periode")) {
@@ -56,7 +56,7 @@ class PininParse {
             init {
 
                 val apiResponsePeriodi =
-                    URL("https://intranet.itispininfarina.it/orario/_ressource.js").readText().lines()
+                    URL("https://orario.itispininfarina.it/_ressource.js").readText().lines()
 
                 for (line in apiResponsePeriodi) {
                     if (line.contains("new Ressource")) {
