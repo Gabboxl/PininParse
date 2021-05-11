@@ -25,7 +25,7 @@ class PininParse {
 
     }
 
-    class periodi {
+    class Periodi {
         companion object {
             private val pages = mutableListOf<ArrayList<Any>>()
 
@@ -48,7 +48,7 @@ class PininParse {
         }
     }
 
-    class classi {
+    class Classi {
 
         companion object {
             private val pages = mutableListOf<ArrayList<Any>>()
