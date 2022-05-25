@@ -29,8 +29,7 @@ class PininParse {
         companion object {
             private val pages = mutableListOf<ArrayList<String>>()
 
-            init {
-
+            suspend fun init(){
                 val apiResponsePeriodi =
                     URL("https://orario.itispininfarina.it/_periode.js").readText().lines()
 
@@ -53,8 +52,7 @@ class PininParse {
         companion object {
             private val pages = mutableListOf<ArrayList<String>>()
 
-            init {
-
+            suspend fun init(){
                 val apiResponsePeriodi =
                     URL("https://orario.itispininfarina.it/_ressource.js").readText().lines()
 
