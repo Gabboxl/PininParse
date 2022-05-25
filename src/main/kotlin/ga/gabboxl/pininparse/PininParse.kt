@@ -1,7 +1,6 @@
 package ga.gabboxl.pininparse
 
 import java.net.URL
-import java.util.Arrays
 
 class PininParse {
     companion object {
@@ -57,29 +56,27 @@ class PininParse {
                 val apiResponsePeriodi =
                     URL("https://orario.itispininfarina.it/_ressource.js").readText().lines()
 
+
                 for (line in apiResponsePeriodi) {
                     if (line.contains("new Ressource")) {
                         val pattern = Regex("""listeRessources \[\d+]\s?=\s?new Ressource \(("(.*)",?\s?\n?)+\);""")
                         parseEDTjs(pattern, line, pages)
                     }
                 }
+
+                pages.removeAt(0) //levo il primo elemento che contiene selezionate...
             }
 
             fun list(): ArrayList<ArrayList<String>> {
                 return pages
             }
 
-            fun listNomiClassi(withFirstElement: Boolean): ArrayList<String>{
+            fun listNomiClassi(): ArrayList<String>{
                 val nomiclassi = arrayListOf<String>()
 
                 for (pagina in pages){
                     nomiclassi.add(pagina[1])
                 }
-
-                if (!withFirstElement){
-                    nomiclassi.removeAt(0)
-                }
-
                 return nomiclassi
             }
         }
