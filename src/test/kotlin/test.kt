@@ -6,4 +6,6 @@ suspend fun main(){
 
     println(PininParse.Classi.list())
     println(PininParse.Periodi.list())
+
+    println(PininParse.Classi.listNomiClassi())
 }

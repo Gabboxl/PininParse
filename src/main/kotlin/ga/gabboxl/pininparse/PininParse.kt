@@ -67,6 +67,20 @@ class PininParse {
             fun list(): MutableList<ArrayList<String>> {
                 return pages
             }
+
+            fun listNomiClassi(withFirstElement: Boolean): ArrayList<String>{
+                val nomiclassi = arrayListOf<String>()
+
+                for (pagina in pages){
+                    nomiclassi.add(pagina[1])
+                }
+
+                if (!withFirstElement){
+                    nomiclassi.removeAt(0)
+                }
+
+                return nomiclassi
+            }
         }
 
     }
