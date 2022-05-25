@@ -5,14 +5,14 @@ import java.net.URL
 class PininParse {
     companion object {
 
-        private fun parseEDTjs(pattern: Regex, line: String, pages: MutableList<ArrayList<Any>>) {
+        private fun parseEDTjs(pattern: Regex, line: String, pages: MutableList<ArrayList<String>>) {
             val fatt = pattern.find(line)!!.groupValues[1]
 
             val patternSplit = Regex(""",(?=(?:[^"]*"[^"]*")*(?![^"]*"))""")
             val values = patternSplit.split(fatt)
 
             val currNo = pages.count()
-            pages.plusAssign(arrayListOf<Any>())
+            pages.plusAssign(arrayListOf<String>())
 
             var i = 0
             while (i < values.count()) {
@@ -27,7 +27,7 @@ class PininParse {
 
     class Periodi {
         companion object {
-            private val pages = mutableListOf<ArrayList<Any>>()
+            private val pages = mutableListOf<ArrayList<String>>()
 
             init {
 
@@ -42,7 +42,7 @@ class PininParse {
                 }
             }
 
-            fun list(): MutableList<ArrayList<Any>> {
+            fun list(): MutableList<ArrayList<String>> {
                 return pages
             }
         }
@@ -51,7 +51,7 @@ class PininParse {
     class Classi {
 
         companion object {
-            private val pages = mutableListOf<ArrayList<Any>>()
+            private val pages = mutableListOf<ArrayList<String>>()
 
             init {
 
@@ -66,7 +66,7 @@ class PininParse {
                 }
             }
 
-            fun list(): MutableList<ArrayList<Any>> {
+            fun list(): MutableList<ArrayList<String>> {
                 return pages
             }
         }
