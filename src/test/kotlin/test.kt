@@ -7,5 +7,5 @@ suspend fun main(){
     println(PininParse.Classi.list())
     println(PininParse.Periodi.list())
 
-    println(PininParse.Classi.listNomiClassi())
+    println(PininParse.Classi.listNomiClassi(true))
 }

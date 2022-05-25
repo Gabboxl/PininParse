@@ -1,14 +1,15 @@
 package ga.gabboxl.pininparse
 
 import java.net.URL
+import java.util.Arrays
 
 class PininParse {
     companion object {
 
-        private fun parseEDTjs(pattern: Regex, line: String, pages: MutableList<ArrayList<String>>) {
-            val fatt = pattern.find(line)!!.groupValues[1]
+        private fun parseEDTjs(pattern: Regex, line: String, pages: ArrayList<ArrayList<String>>) {
+            val fatt = pattern.find(line)!!.groupValues[2]
 
-            val patternSplit = Regex(""",(?=(?:[^"]*"[^"]*")*(?![^"]*"))""")
+            val patternSplit = Regex("""",(?=([^"]*"[^"]*")*)"""")
             val values = patternSplit.split(fatt)
 
             val currNo = pages.count()
@@ -27,7 +28,7 @@ class PininParse {
 
     class Periodi {
         companion object {
-            private val pages = mutableListOf<ArrayList<String>>()
+            private val pages = arrayListOf<ArrayList<String>>()
 
             suspend fun init(){
                 val apiResponsePeriodi =
@@ -50,7 +51,7 @@ class PininParse {
     class Classi {
 
         companion object {
-            private val pages = mutableListOf<ArrayList<String>>()
+            private val pages = arrayListOf<ArrayList<String>>()
 
             suspend fun init(){
                 val apiResponsePeriodi =
@@ -64,7 +65,7 @@ class PininParse {
                 }
             }
 
-            fun list(): MutableList<ArrayList<String>> {
+            fun list(): ArrayList<ArrayList<String>> {
                 return pages
             }
 
