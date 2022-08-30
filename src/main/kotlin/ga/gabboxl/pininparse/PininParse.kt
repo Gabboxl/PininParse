@@ -35,8 +35,10 @@ class PininParse {
 
                 for (line in apiResponsePeriodi) {
                     if (line.contains("new Periode")) {
-                        val pattern = Regex("""listePeriodes \[\d+]\s?=\s?new Periode \(("(.*)",?\s?\n?)+\);""")
-                        parseEDTjs(pattern, line, pages)
+                        if (!line.contains("Selezionate")) { //skippo i periodi falsi
+                            val pattern = Regex("""listePeriodes \[\d+]\s?=\s?new Periode \(("(.*)",?\s?\n?)+\);""")
+                            parseEDTjs(pattern, line, pages)
+                        }
                     }
                 }
             }
