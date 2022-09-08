@@ -27,10 +27,8 @@ class PininParse {
     }
 
 
-    class Update {
-        companion object {
+    object Update {
             var match: String? = null
-        }
 
         suspend fun init() {
             val apiResponsePeriodi =
@@ -52,10 +50,8 @@ class PininParse {
         }
     }
 
-    class Periodi {
-        companion object {
+    object Periodi {
             private val pages = arrayListOf<ArrayList<String>>()
-        }
 
         suspend fun init() {
             val apiResponsePeriodi =
@@ -76,10 +72,8 @@ class PininParse {
         }
     }
 
-    class Classi {
-        companion object {
+    object Classi {
             private val pages = arrayListOf<ArrayList<String>>()
-        }
 
         suspend fun init() {
             val apiResponsePeriodi =
