@@ -1,6 +1,8 @@
 package ga.gabboxl.pininparse
 
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class PininParse {
     companion object {
@@ -47,6 +49,10 @@ class PininParse {
 
         fun list(): String? {
             return match
+        }
+
+        fun getDate(): Date {
+            return SimpleDateFormat("dd/mm/yyyy").parse(match)
         }
     }
 
