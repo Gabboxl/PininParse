@@ -85,6 +85,7 @@ class PininParse {
             val apiResponsePeriodi =
                 URL(baseLink + "_ressource.js").readText().lines()
 
+            pages.clear()
 
             for (line in apiResponsePeriodi) {
                 if (line.contains("new Ressource")) {
