@@ -63,6 +63,8 @@ class PininParse {
             val apiResponsePeriodi =
                 URL(baseLink + "_periode.js").readText().lines()
 
+            pages.clear()
+
             for (line in apiResponsePeriodi) {
                 if (line.contains("new Periode")) {
                     if (!line.contains("Selezionate")) { //skippo i periodi falsi
