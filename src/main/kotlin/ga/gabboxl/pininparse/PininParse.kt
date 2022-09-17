@@ -6,7 +6,7 @@ import java.util.Date
 
 class PininParse {
     companion object {
-        const val baseLink = "https://orario.itispininfarina.it/"
+        const val baseLink = "https://testground.gabboxl.ga/"
 
         private fun parseEDTjs(pattern: Regex, line: String, pages: ArrayList<ArrayList<String>>) {
             val fatt =
@@ -66,11 +66,9 @@ class PininParse {
             pages.clear()
 
             for (line in apiResponsePeriodi) {
-                if (line.contains("new Periode")) {
-                    if (!line.contains("Selezionate")) { //skippo i periodi falsi
+                if (line.contains("new Periode") && !line.contains("Selezionate") && line.contains("c0")) { //skippo i periodi falsi
                         val pattern = Regex("""listePeriodes \[\d+]\s?=\s?new Periode \(("(.*)",?\s?\n?)+\);""")
                         parseEDTjs(pattern, line, pages)
-                    }
                 }
             }
         }
@@ -90,7 +88,7 @@ class PininParse {
             pages.clear()
 
             for (line in apiResponsePeriodi) {
-                if (line.contains("new Ressource")) {
+                if (line.contains("new Ressource") && line.contains("grClasse")) {
                     val pattern = Regex("""listeRessources \[\d+]\s?=\s?new Ressource \(("(.*)",?\s?\n?)+\);""")
                     parseEDTjs(pattern, line, pages)
                 }
