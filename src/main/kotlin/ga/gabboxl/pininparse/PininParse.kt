@@ -1,10 +1,12 @@
 package ga.gabboxl.pininparse
 
-import com.google.gson.JsonParser
-import org.json.XML
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.xpath.XPath
+import javax.xml.xpath.XPathConstants
+import javax.xml.xpath.XPathFactory
 
 
 class PininParse {
@@ -80,17 +82,27 @@ class PininParse {
                     val nomefilexml =
                         patternxmlnomefile.find(pages[pages.count() - 1][2])!!.groupValues[1] //gruppo 1 per questo pattern: https://regex101.com/r/7PBxGL/1
 
-                    val contenutofilexml = URL(baseLink + "classi/" + nomefilexml + ".xml").readText()
+                    val contenutofilexml = URL(baseLink + "classi/" + nomefilexml + ".xml").readText().byteInputStream()
 
-                    val jsonObjstring = XML.toJSONObject(contenutofilexml).toString()
 
-                    val jsonparserjsonobject = JsonParser.parseString(jsonObjstring).asJsonObject //non so perche serva questo pero' l'ho messo e funziona per il parsing
 
-                    val titoloPeriodo: String = jsonparserjsonobject.get("Document").asJsonObject.get("ParametrePublication").asJsonObject.get("Grille").asJsonObject.get("String").asJsonArray.get(1).asJsonObject.get("content").asString
+                    var factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
+                    var builder = factory.newDocumentBuilder()
 
+
+
+                    var documento = builder.parse(contenutofilexml)
+
+                    //e' importante a quanto pare
+                    documento.documentElement.normalize()
+
+                    val xPath: XPath = XPathFactory.newInstance().newXPath()
+                    val xpathStr = "//Document//ParametrePublication//Grille//String[2]//text()"
+
+                    val titoloPeriodo = xPath.evaluate(xpathStr, documento, XPathConstants.STRING)
 
                     //aggiungo il titolo dell'orario dall'xml all'indice - 1 perche' con la funzione parseEDTjs ho gia' aggiunto un indice
-                    pages[pages.count() - 1].plusAssign(titoloPeriodo) //aggiungo il titolo del periodo all'array corrente del periodo
+                    pages[pages.count() - 1].plusAssign(titoloPeriodo.toString()) //aggiungo il titolo del periodo all'array corrente del periodo
                 }
             }
         }
