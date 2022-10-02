@@ -1,13 +1,11 @@
 package ga.gabboxl.pininparse
 
-import org.jdom2.Document
-import org.jdom2.Element
-import org.jdom2.input.SAXBuilder
+import com.google.gson.JsonParser
+import org.json.XML
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.xml.XMLConstants
-import kotlin.collections.ArrayList
+
 
 class PininParse {
     companion object {
@@ -82,24 +80,13 @@ class PininParse {
                     val nomefilexml =
                         patternxmlnomefile.find(pages[pages.count() - 1][2])!!.groupValues[1] //gruppo 1 per questo pattern: https://regex101.com/r/7PBxGL/1
 
-                    val contenutofilexml = URL(baseLink + "classi/" + nomefilexml + ".xml")
+                    val contenutofilexml = URL(baseLink + "classi/" + nomefilexml + ".xml").readText()
 
+                    val jsonObjstring = XML.toJSONObject(contenutofilexml).toString()
 
-                    val sax: SAXBuilder =  SAXBuilder()
+                    val jsonparserjsonobject = JsonParser.parseString(jsonObjstring).asJsonObject //non so perche serva questo pero' l'ho messo e funziona per il parsing
 
-                    // https://rules.sonarsource.com/java/RSPEC-2755
-                    // prevent xxe
-                    //sax.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "")
-                    //sax.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "")
-                    sax.setFeature("http://xml.org/sax/features/external-general-entities", false);
-                    sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-                    sax.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-
-                    // XML is in a web-based location
-                     val doc : Document = sax.build(contenutofilexml)
-
-                    val elementoStringXml: List<Element> = doc.rootElement.getChild("ParametrePublication").getChild("Grille").getChildren("String")
-                    val titoloPeriodo: String = elementoStringXml[1].value    //prendo l'index 1 perche' e' il secondo tag <String> nel file xml che contiene il titolo dell'orario
+                    val titoloPeriodo: String = jsonparserjsonobject.get("Document").asJsonObject.get("ParametrePublication").asJsonObject.get("Grille").asJsonObject.get("String").asJsonArray.get(1).asJsonObject.get("content").asString
 
 
                     //aggiungo il titolo dell'orario dall'xml all'indice - 1 perche' con la funzione parseEDTjs ho gia' aggiunto un indice
