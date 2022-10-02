@@ -91,6 +91,9 @@ class PininParse {
                     // prevent xxe
                     //sax.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "")
                     //sax.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "")
+                    sax.setFeature("http://xml.org/sax/features/external-general-entities", false);
+                    sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+                    sax.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
                     // XML is in a web-based location
                      val doc : Document = sax.build(contenutofilexml)
