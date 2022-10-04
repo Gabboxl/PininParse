@@ -35,7 +35,7 @@ class PininParse {
 
 
     object Update {
-            var match: String? = null
+        var match: String? = null
 
         suspend fun init() {
             val apiResponsePeriodi =
@@ -63,7 +63,7 @@ class PininParse {
 
     //struttura dati periodo: [codiceclasse, nomeperiodo, semilinkimg, titoloperiodo] / a volte i tizi che fanno l'orario mettono le date dell'orario nel nomeperiodo e a volte nel titoloperiodo, quindi cio' e' da tenere in conto
     object Periodi {
-            private val pages = arrayListOf<ArrayList<String>>()
+        private val pages = arrayListOf<ArrayList<String>>()
 
         suspend fun init() {
             val apiResponsePeriodi =
@@ -85,10 +85,8 @@ class PininParse {
                     val contenutofilexml = URL(baseLink + "classi/" + nomefilexml + ".xml").readText().byteInputStream()
 
 
-
                     val factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
                     val builder = factory.newDocumentBuilder()
-
 
 
                     val documento = builder.parse(contenutofilexml)
@@ -113,7 +111,7 @@ class PininParse {
     }
 
     object Classi {
-            private val pages = arrayListOf<ArrayList<String>>()
+        private val pages = arrayListOf<ArrayList<String>>()
 
         suspend fun init() {
             val apiResponsePeriodi =
