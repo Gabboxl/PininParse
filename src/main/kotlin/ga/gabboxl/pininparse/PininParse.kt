@@ -86,12 +86,12 @@ class PininParse {
 
 
 
-                    var factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
-                    var builder = factory.newDocumentBuilder()
+                    val factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
+                    val builder = factory.newDocumentBuilder()
 
 
 
-                    var documento = builder.parse(contenutofilexml)
+                    val documento = builder.parse(contenutofilexml)
 
                     //e' importante a quanto pare
                     documento.documentElement.normalize()
