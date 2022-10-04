@@ -57,7 +57,7 @@ class PininParse {
         }
 
         fun getDate(): Date {
-            return SimpleDateFormat("dd/mm/yyyy").parse(match)
+            return SimpleDateFormat("dd/MM/yyyy").parse(match)
         }
     }
 

@@ -4,4 +4,6 @@ suspend fun main(){
     PininParse.Update.init()
 
     println(PininParse.Update.list())
+
+    println(PininParse.Update.getDate())
 }
