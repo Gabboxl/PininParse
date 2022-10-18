@@ -1,7 +1,5 @@
 package ga.gabboxl.pininparse
 
-import java.net.MalformedURLException
-import java.net.URISyntaxException
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,7 +46,7 @@ class PininParse {
 
 
     object Update {
-        var match: String? = null
+        private var match: String? = null
 
         suspend fun init(serverLink: String) {
             val apiResponsePeriodi =
