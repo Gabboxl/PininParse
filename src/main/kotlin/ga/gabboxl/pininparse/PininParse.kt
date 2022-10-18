@@ -11,6 +11,8 @@ import javax.xml.xpath.XPathFactory
 
 class PininParse {
     companion object {
+        const val basePininLink = "https://orario.itispininfarina.it/"
+
         private fun parseEDTjs(pattern: Regex, line: String, pages: ArrayList<ArrayList<String>>) {
             val fatt =
                 pattern.find(line)!!.groupValues[2] //forse da sostituire con il gruppo 1 perche mette anche gli apici allinizio e alla fine
@@ -48,7 +50,7 @@ class PininParse {
     object Update {
         private var match: String? = null
 
-        suspend fun init(serverLink: String) {
+        suspend fun init(serverLink: String = basePininLink) {
             val apiResponsePeriodi =
                 URL(fixServerLink(serverLink) + "_bandeau.js").readText().lines()
 
@@ -75,7 +77,7 @@ class PininParse {
     object Periodi {
         private val pages = arrayListOf<ArrayList<String>>()
 
-        suspend fun init(serverLink: String) {
+        suspend fun init(serverLink: String = basePininLink) {
             val serverLinkFin = fixServerLink(serverLink)
 
             val apiResponsePeriodi =
@@ -125,7 +127,7 @@ class PininParse {
     object Classi {
         private val pages = arrayListOf<ArrayList<String>>()
 
-        suspend fun init(serverLink: String) {
+        suspend fun init(serverLink: String = basePininLink) {
             val apiResponsePeriodi =
                 URL(fixServerLink(serverLink) + "_ressource.js").readText().lines()
 
