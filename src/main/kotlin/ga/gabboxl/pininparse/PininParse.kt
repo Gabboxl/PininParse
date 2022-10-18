@@ -35,7 +35,7 @@ class PininParse {
         private fun fixServerLink(serverLink: String): String {
             var serverLinkOk = serverLink.trim()
 
-            //controllo se la sintassi del link e' corretta, altrimenti sta funzione lancia un'eccezione / forse un metodo migliore esiste comunque
+            //controllo se la sintassi del link è corretta, altrimenti sta funzione lancia un'eccezione / forse un metodo migliore esiste comunque
                 URL(serverLinkOk).toURI()
 
             if(!serverLinkOk.endsWith("/") && !serverLinkOk.endsWith("\\")){
@@ -73,7 +73,7 @@ class PininParse {
         }
     }
 
-    //struttura dati periodo: [codiceclasse, nomeperiodo, semilinkimg, titoloperiodo] / a volte i tizi che fanno l'orario mettono le date dell'orario nel nomeperiodo e a volte nel titoloperiodo, quindi cio' e' da tenere in conto
+    //struttura dati periodo: [codiceclasse, nomeperiodo, semilinkimg, titoloperiodo] / a volte i tizi che fanno l'orario mettono le date dell'orario nel nomeperiodo e a volte nel titoloperiodo, quindi cio' è da tenere in conto
     object Periodi {
         private val pages = arrayListOf<ArrayList<String>>()
 
@@ -105,7 +105,7 @@ class PininParse {
 
                     val documento = builder.parse(contenutofilexml)
 
-                    //e' importante a quanto pare
+                    //è importante a quanto pare
                     documento.documentElement.normalize()
 
                     val xPath: XPath = XPathFactory.newInstance().newXPath()
