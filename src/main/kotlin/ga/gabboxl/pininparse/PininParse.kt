@@ -1,5 +1,7 @@
 package ga.gabboxl.pininparse
 
+import java.net.MalformedURLException
+import java.net.URISyntaxException
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
@@ -11,8 +13,6 @@ import javax.xml.xpath.XPathFactory
 
 class PininParse {
     companion object {
-        const val baseLink = "https://orario.itispininfarina.it/"
-
         private fun parseEDTjs(pattern: Regex, line: String, pages: ArrayList<ArrayList<String>>) {
             val fatt =
                 pattern.find(line)!!.groupValues[2] //forse da sostituire con il gruppo 1 perche mette anche gli apici allinizio e alla fine
@@ -31,16 +31,28 @@ class PininParse {
                 i++
             }
         }
+
+        private fun fixServerLink(serverLink: String): String {
+            var serverLinkOk = serverLink.trim()
+
+            //controllo se la sintassi del link e' corretta, altrimenti sta funzione lancia un'eccezione / forse un metodo migliore esiste comunque
+                URL(serverLinkOk).toURI()
+
+            if(!serverLinkOk.endsWith("/") && !serverLinkOk.endsWith("\\")){
+                serverLinkOk = serverLink.plus("/")
+            }
+
+            return serverLinkOk
+        }
     }
 
 
     object Update {
         var match: String? = null
 
-        suspend fun init() {
+        suspend fun init(serverLink: String) {
             val apiResponsePeriodi =
-                URL(baseLink + "_bandeau.js").readText().lines()
-
+                URL(fixServerLink(serverLink) + "_bandeau.js").readText().lines()
 
 
             for (line in apiResponsePeriodi) {
@@ -65,9 +77,11 @@ class PininParse {
     object Periodi {
         private val pages = arrayListOf<ArrayList<String>>()
 
-        suspend fun init() {
+        suspend fun init(serverLink: String) {
+            val serverLinkFin = fixServerLink(serverLink)
+
             val apiResponsePeriodi =
-                URL(baseLink + "_periode.js").readText().lines()
+                URL(serverLinkFin + "_periode.js").readText().lines()
 
             pages.clear()
 
@@ -82,7 +96,7 @@ class PininParse {
                     val nomefilexml =
                         patternxmlnomefile.find(pages[pages.count() - 1][2])!!.groupValues[1] //gruppo 1 per questo pattern: https://regex101.com/r/7PBxGL/1
 
-                    val contenutofilexml = URL(baseLink + "classi/" + nomefilexml + ".xml").readText().byteInputStream()
+                    val contenutofilexml = URL(serverLinkFin + "classi/" + nomefilexml + ".xml").readText().byteInputStream()
 
 
                     val factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
@@ -113,9 +127,9 @@ class PininParse {
     object Classi {
         private val pages = arrayListOf<ArrayList<String>>()
 
-        suspend fun init() {
+        suspend fun init(serverLink: String) {
             val apiResponsePeriodi =
-                URL(baseLink + "_ressource.js").readText().lines()
+                URL(fixServerLink(serverLink) + "_ressource.js").readText().lines()
 
             pages.clear()
 
