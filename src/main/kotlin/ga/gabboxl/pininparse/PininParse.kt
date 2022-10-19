@@ -50,7 +50,9 @@ class PininParse {
     object Update {
         private var match: String? = null
 
-        suspend fun init(serverLink: String = basePininLink) {
+        suspend fun init(paramServerLink: String?) {
+            val serverLink = if (paramServerLink.isNullOrBlank()) basePininLink else paramServerLink
+
             val apiResponsePeriodi =
                 URL(fixServerLink(serverLink) + "_bandeau.js").readText().lines()
 
@@ -77,7 +79,9 @@ class PininParse {
     object Periodi {
         private val pages = arrayListOf<ArrayList<String>>()
 
-        suspend fun init(serverLink: String = basePininLink) {
+        suspend fun init(paramServerLink: String?) {
+            val serverLink = if (paramServerLink.isNullOrBlank()) basePininLink else paramServerLink
+
             val serverLinkFin = fixServerLink(serverLink)
 
             val apiResponsePeriodi =
@@ -127,7 +131,9 @@ class PininParse {
     object Classi {
         private val pages = arrayListOf<ArrayList<String>>()
 
-        suspend fun init(serverLink: String = basePininLink) {
+        suspend fun init(paramServerLink: String?) {
+            val serverLink = if (paramServerLink.isNullOrBlank()) basePininLink else paramServerLink
+
             val apiResponsePeriodi =
                 URL(fixServerLink(serverLink) + "_ressource.js").readText().lines()
 

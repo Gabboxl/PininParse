@@ -1,7 +1,7 @@
 import ga.gabboxl.pininparse.PininParse
 
 suspend fun main(){
-    PininParse.Update.init("https://orario.itispininfarina.it/")
+    PininParse.Update.init(null)
 
     println(PininParse.Update.list())
 
